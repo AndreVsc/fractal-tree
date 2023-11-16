@@ -26,6 +26,15 @@ function setup() {
     sliderLength.attribute('title', 'This can cause some lags');
     lengthDiv.child(lengthText);
     lengthDiv.child(sliderLength);
+
+    let facDiv = createDiv();
+    facDiv.addClass('fac');
+    
+    facText = createP(`Fac`);
+    sliderFac = createSlider(0, 80, 67);
+    sliderFac.attribute('title', 'This can cause too lags');
+    facDiv.child(facText);
+    facDiv.child(sliderFac);
     
     let colorsDiv = createDiv();
     colorsDiv.addClass('colors');
@@ -50,6 +59,7 @@ function setup() {
 
     headerDiv.child(angleDiv);
     headerDiv.child(lengthDiv);
+    headerDiv.child(facDiv);
     headerDiv.child(colorsDiv);
     headerDiv.addClass('flex-col');
 }
@@ -67,6 +77,7 @@ function draw() {
     // Labels
     angleText.html(`Angle: ${sliderAngle.value().toFixed(3)} rad`);
     lengthText.html(`Length: ${sliderLength.value()}px (initial branch)`);
+    facText.html(`Fac: ${sliderFac.value()/100} CAUTION!`);
     redText.html(`Red: ${sliderRed.value()}`);
     greenText.html(`Green: ${sliderGreen.value()}`);
     blueText.html(`Blue: ${sliderBlue.value()}`);
@@ -77,7 +88,7 @@ function branch(length) {
     let g = sliderGreen.value();
     let b = sliderBlue.value();
 
-    const fac = 0.69; // -> recursive length of next branch (the closer to 1 the more denser and lag)
+    const fac = sliderFac.value()/100; // -> recursive length of next branch (the closer to 1 the more denser and lag)
 
     stroke(Number.parseInt((r - length)), Number.parseInt((g - length)), Number.parseInt((b - length)));
     line(0, 0, 0, -length);
