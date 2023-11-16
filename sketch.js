@@ -23,6 +23,7 @@ function setup() {
     
     lengthText = createP(`Length`);
     sliderLength = createSlider(0, HEIGHT/2.5, 200);
+    sliderLength.attribute('title', 'This can cause some lags');
     lengthDiv.child(lengthText);
     lengthDiv.child(sliderLength);
     
