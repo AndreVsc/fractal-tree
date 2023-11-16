@@ -17,6 +17,14 @@ function setup() {
     sliderAngle = createSlider(0, Math.PI * 2, 0.500, 0);
     angleDiv.child(angleText);
     angleDiv.child(sliderAngle);
+
+    let lengthDiv = createDiv();
+    lengthDiv.addClass('lenght');
+    
+    lengthText = createP(`Length`);
+    sliderLength = createSlider(0, HEIGHT/2.5, 200);
+    lengthDiv.child(lengthText);
+    lengthDiv.child(sliderLength);
     
     let colorsDiv = createDiv();
     colorsDiv.addClass('colors');
@@ -40,6 +48,7 @@ function setup() {
     headerDiv.addClass('header');
 
     headerDiv.child(angleDiv);
+    headerDiv.child(lengthDiv);
     headerDiv.child(colorsDiv);
     headerDiv.addClass('flex-col');
 }
@@ -52,10 +61,11 @@ function draw() {
     translate(Number.parseInt(WIDTH / 2), HEIGHT);
 
     // Start branch
-    branch(200);
+    branch(sliderLength.value());
 
     // Labels
     angleText.html(`Angle: ${sliderAngle.value().toFixed(3)} rad`);
+    lengthText.html(`Length: ${sliderLength.value()}px (initial branch)`);
     redText.html(`Red: ${sliderRed.value()}`);
     greenText.html(`Green: ${sliderGreen.value()}`);
     blueText.html(`Blue: ${sliderBlue.value()}`);
