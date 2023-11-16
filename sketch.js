@@ -19,7 +19,7 @@ function setup() {
     angleDiv.child(sliderAngle);
 
     let lengthDiv = createDiv();
-    lengthDiv.addClass('lenght');
+    lengthDiv.addClass('length');
     
     lengthText = createP(`Length`);
     sliderLength = createSlider(0, HEIGHT/2.5, 200);
