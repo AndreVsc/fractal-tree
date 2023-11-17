@@ -9,34 +9,27 @@ var angle = 0;
 function setup() {
     createCanvas(WIDTH, HEIGHT);
 
-    
-    let angleDiv = createDiv();
-    angleDiv.addClass('angle');
-    
+    let treeDiv = createDiv('TREE');
+    treeDiv.addClass('tree');
+
     angleText = createP(`Angle`);
     sliderAngle = createSlider(0, Math.PI * 2, 0.500, 0);
-    angleDiv.child(angleText);
-    angleDiv.child(sliderAngle);
-
-    let lengthDiv = createDiv();
-    lengthDiv.addClass('length');
+    treeDiv.child(angleText);
+    treeDiv.child(sliderAngle);
     
     lengthText = createP(`Length`);
     sliderLength = createSlider(0, HEIGHT/2.5, 200);
     sliderLength.attribute('title', 'This can cause some lags');
-    lengthDiv.child(lengthText);
-    lengthDiv.child(sliderLength);
-
-    let facDiv = createDiv();
-    facDiv.addClass('fac');
+    treeDiv.child(lengthText);
+    treeDiv.child(sliderLength);
     
     facText = createP(`Fac`);
     sliderFac = createSlider(0, 80, 67);
     sliderFac.attribute('title', 'This can cause too lags');
-    facDiv.child(facText);
-    facDiv.child(sliderFac);
+    treeDiv.child(facText);
+    treeDiv.child(sliderFac);
     
-    let windStrengthDiv = createDiv();
+    let windStrengthDiv = createDiv('WIND');
     windStrengthDiv.addClass('wind-strength');
     
     windStrengthText = createP(`Wind Strength`);
@@ -44,7 +37,7 @@ function setup() {
     windStrengthDiv.child(windStrengthText);
     windStrengthDiv.child(sliderWindStrength);
 
-    let colorsDiv = createDiv();
+    let colorsDiv = createDiv('COLORS');
     colorsDiv.addClass('colors');
     
     redText = createP(`Red`);
@@ -65,9 +58,7 @@ function setup() {
     let headerDiv = createDiv();
     headerDiv.addClass('header');
 
-    headerDiv.child(angleDiv);
-    headerDiv.child(lengthDiv);
-    headerDiv.child(facDiv);
+    headerDiv.child(treeDiv);
     headerDiv.child(windStrengthDiv);
     headerDiv.child(colorsDiv);
     headerDiv.addClass('flex-col');
