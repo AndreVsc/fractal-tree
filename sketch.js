@@ -36,6 +36,14 @@ function setup() {
     facDiv.child(facText);
     facDiv.child(sliderFac);
     
+    let windStrengthDiv = createDiv();
+    windStrengthDiv.addClass('wind-strength');
+    
+    windStrengthText = createP(`Wind Strength`);
+    sliderWindStrength = createSlider(0, 100, 10);
+    windStrengthDiv.child(windStrengthText);
+    windStrengthDiv.child(sliderWindStrength);
+
     let colorsDiv = createDiv();
     colorsDiv.addClass('colors');
     
@@ -60,6 +68,7 @@ function setup() {
     headerDiv.child(angleDiv);
     headerDiv.child(lengthDiv);
     headerDiv.child(facDiv);
+    headerDiv.child(windStrengthDiv);
     headerDiv.child(colorsDiv);
     headerDiv.addClass('flex-col');
 }
@@ -78,16 +87,28 @@ function draw() {
     angleText.html(`Angle: ${sliderAngle.value().toFixed(3)} rad`);
     lengthText.html(`Length: ${sliderLength.value()}px (initial branch)`);
     facText.html(`Fac: ${sliderFac.value()/100} CAUTION!`);
+    windStrengthText.html(`Wind Strength: ${sliderWindStrength.value()/100}`);
     redText.html(`Red: ${sliderRed.value()}`);
     greenText.html(`Green: ${sliderGreen.value()}`);
     blueText.html(`Blue: ${sliderBlue.value()}`);
 }
 
 function branch(length) {
-    let r = sliderRed.value();
-    let g = sliderGreen.value();
-    let b = sliderBlue.value();
+    var r = sliderRed.value();
+    var g = sliderGreen.value();
+    var b = sliderBlue.value();
+    var framing = frameCount * 0.05
+    
+    // Natural Tree movement
+    const nonWindVariation = 0.002 * sin(framing);
+    
+    // Wind
+    const windStrength = sliderWindStrength.value() / 200;
 
+    angleVariation = windStrength * sin(framing);
+
+    const calculatedWind = angleVariation + nonWindVariation;
+    
     const fac = sliderFac.value()/100; // -> recursive length of next branch (the closer to 1 the more denser and lag)
 
     stroke(Number.parseInt((r - length)), Number.parseInt((g - length)), Number.parseInt((b - length)));
@@ -97,11 +118,11 @@ function branch(length) {
     // Length limit (The smaller the more lag)
     if (length > 3) {
         push();
-        rotate(angle);
+        rotate(angle + calculatedWind);
         branch(length * fac);
         pop();
         push();
-        rotate(-angle);
+        rotate(-angle + calculatedWind);
         branch(length * fac);
         pop();
     }
