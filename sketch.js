@@ -5,6 +5,7 @@ var sliderRed;
 var sliderGreen;
 var sliderBlue;
 var angle = 0;
+var branches=2;
 
 function setup() {
     createCanvas(WIDTH, HEIGHT);
@@ -12,19 +13,24 @@ function setup() {
     let treeDiv = createDiv('TREE');
     treeDiv.addClass('tree');
 
+    brancheText = createP(`branches`);
+    sliderbranches = createSlider(1, 50, 2);
+    treeDiv.child(brancheText);
+    treeDiv.child(sliderbranches );
+
     angleText = createP(`Angle`);
     sliderAngle = createSlider(0, Math.PI * 2, 0.500, 0);
     treeDiv.child(angleText);
     treeDiv.child(sliderAngle);
     
     lengthText = createP(`Length`);
-    sliderLength = createSlider(0, HEIGHT/2.5, 200);
+    sliderLength = createSlider(0, HEIGHT/2.5, 100);
     sliderLength.attribute('title', 'This can cause some lags');
     treeDiv.child(lengthText);
     treeDiv.child(sliderLength);
     
     facText = createP(`Fac`);
-    sliderFac = createSlider(0, 80, 67);
+    sliderFac = createSlider(0, 80, 59);
     sliderFac.attribute('title', 'This can cause too lags');
     treeDiv.child(facText);
     treeDiv.child(sliderFac);
@@ -75,6 +81,7 @@ function draw() {
     branch(sliderLength.value());
 
     // Labels
+    brancheText.html(`Reduce: ${sliderbranches.value()} OPTIMIZE`);
     angleText.html(`Angle: ${sliderAngle.value().toFixed(3)} rad`);
     lengthText.html(`Length: ${sliderLength.value()}px (initial branch)`);
     facText.html(`Fac: ${sliderFac.value()/100} CAUTION!`);
@@ -89,6 +96,7 @@ function branch(length) {
     var g = sliderGreen.value();
     var b = sliderBlue.value();
     var framing = frameCount * 0.05
+    var l = sliderbranches.value();
     
     // Natural Tree movement
     const nonWindVariation = 0.002 * sin(framing);
@@ -107,7 +115,7 @@ function branch(length) {
     translate(0, -length);
 
     // Length limit (The smaller the more lag)
-    if (length > 3) {
+    if (length > l) {
         push();
         rotate(angle + calculatedWind);
         branch(length * fac);
